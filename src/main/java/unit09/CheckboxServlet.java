@@ -1,4 +1,4 @@
-package unit05;
+package unit09;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ParamServlet
+ * Servlet implementation class CheckboxServlet
  */
-@WebServlet("/ParamServlet")
-public class ParamServlet extends HttpServlet {
+@WebServlet("/CheckboxServlet")
+public class CheckboxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ParamServlet() {
+    public CheckboxServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,25 +28,22 @@ public class ParamServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.setContentType("text/html;charset=UTF-8");
 		
-		response.setContentType("text/html;charset=EUC-KR");
-		
-		String id = request.getParameter("id");
-		int age = Integer.parseInt(request.getParameter("age"));
-		String address = request.getParameter("address");
 		PrintWriter out = response.getWriter();
-		
 		out.print("<html><body>");
-		out.println("당신이 입력한 정보다<br>");
-		out.println("아이디: ");
-		out.println(id);
-		out.println("<br> 나이: ");
-		out.println(age);
-		out.println("<br> 주소: ");
-		out.println(address);
-		out.println("<br><a href='javascript:history.go(-1)'>다시</a>");
+		String items[] = request.getParameterValues("item");
+		
+		if(items==null) {
+			out.print("고른게 없음");
+		}
+		else {
+			out.println("니가 고른 것들<hr>");
+			for (String item : items) {
+				out.printf("%s ",item);
+			}
+		}
+		out.println("<br><a href='javascript:history.go(-1)>돌아가기</a>'");
 		out.print("</body></html>");
 		out.close();
 	}
@@ -56,7 +53,6 @@ public class ParamServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");//
 		doGet(request, response);
 	}
 
